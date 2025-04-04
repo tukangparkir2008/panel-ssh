@@ -480,8 +480,8 @@ function install_xray() {
     [Install]
     WantedBy=multi-user.target
 
-    EOF
-    print_success "Konfigurasi Packet"
+EOF
+print_success "Konfigurasi Packet"
 }
 
 function ssh(){
