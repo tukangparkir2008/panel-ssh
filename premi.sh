@@ -1,4 +1,9 @@
 #!/bin/bash
+
+#install curl
+apt install curl
+clear
+
 Green="\e[92;1m"
 RED="\033[31m"
 YELLOW="\033[33m"
@@ -23,9 +28,7 @@ clear
 clear && clear && clear
 clear;clear;clear
 
-#install curl
-apt install curl
-clear
+
 
 #IZIN SCRIPT
 MYIP=$(curl -sS ipv4.icanhazip.com)
