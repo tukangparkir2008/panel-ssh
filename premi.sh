@@ -193,21 +193,19 @@ function first_setup(){
     print_success "Directory Xray"
     if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
     echo "Setup Dependencies $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
-    sudo apt-get update -y
-    sudo apt-get install -y --no-install-recommends software-properties-common
-    # Hapus PPA lama jika ada, lalu tambahkan PPA HAProxy 2.8
-    sudo add-apt-repository --remove ppa:vbernat/haproxy-2.0 -y || true
-    sudo add-apt-repository ppa:vbernat/haproxy-2.8 -y
-    sudo apt-get update -y
-    sudo apt-get -y install haproxy
+    sudo apt update -y
+    apt-get install --no-install-recommends software-properties-common
+    add-apt-repository ppa:vbernat/haproxy-2.0 -y
+    apt-get -y install haproxy=2.0.\*
 elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
     echo "Setup Dependencies For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')"
-    # Gunakan PPA yang sama untuk Debian (mendukung Debian 11 Bullseye dan 12 Bookworm)
-    sudo apt-get update -y
-    sudo apt-get install -y --no-install-recommends software-properties-common curl gnupg
-    sudo add-apt-repository ppa:vbernat/haproxy-2.8 -y
-    sudo apt-get update -y
-    sudo apt-get -y install haproxy
+    curl https://haproxy.debian.net/bernat.debian.org.gpg |
+        gpg --dearmor >/usr/share/keyrings/haproxy.debian.net.gpg
+    echo deb "[signed-by=/usr/share/keyrings/haproxy.debian.net.gpg]" \
+        http://haproxy.debian.net buster-backports-1.8 main \
+        >/etc/apt/sources.list.d/haproxy.list
+    sudo apt-get update
+    apt-get -y install haproxy=1.8.\*
 else
     echo -e " Your OS Is Not Supported ($(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g') )"
     exit 1
@@ -360,7 +358,7 @@ TIMEZONE=$(printf '%(%H:%M:%S)T')
 <b> DEFF OFFICIAL SCRIPT  </b>
 <code>────────────────────</code>
 <i>Automatic Notifications From Github</i>
-"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"google.com"}]]}' 
+"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"t.me/@DEFF_7"}]]}' 
 
     curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
